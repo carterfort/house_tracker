@@ -22,4 +22,4 @@ A Chore model with a many-to-many relationship with the User model. How often mu
 
 ##Bills
 
-Help keep track of money going in/out
+Help keep track of money going in/out. Mostly out, I would imagine.
