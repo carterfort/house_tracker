@@ -20,6 +20,22 @@ class ChoresController extends Controller
 
     public function scores()
     {
-    	return Chore::latestScores(7);
+    	return Chore::scores(7);
+    }
+
+    public function store(Request $request)
+    {
+    	$this->validate($request, [
+    		'name' => 'required',
+		]);
+
+		$chore = new Chore();
+		$chore->name = $request->name;
+		$chore->summary = $request->summary;
+		$chore->best_time_to_do = $request->best_time_to_do;
+		$chore->repeats_every = $request->repeats_every;
+		$chore->save();
+
+		return home();
     }
 }
