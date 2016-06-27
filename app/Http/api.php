@@ -11,4 +11,22 @@ Route::get('chores/{chore}/add-record/{user}/{overrideDate?}', 'ChoresController
  */
 Route::get('chores/scores', 'ChoresController@scores');
 
+/**
+ * Store Chores
+ */
 Route::post('chores', 'ChoresController@store');
+
+/**
+ * Store Billers
+ */
+Route::post('billers', 'BillingController@storeBiller');
+
+/**
+ * Store Bills
+ */
+Route::post('bills', 'BillingController@storeBill');
+
+/**
+ * Store Bill Payments
+ */
+Route::post('bills/{bill}/add-payment', 'BillingController@storePayment');
