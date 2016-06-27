@@ -1,4 +1,5 @@
 <nav class="navbar navbar-default">
+  @if(auth()->check())
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -26,9 +27,12 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chores <span class="caret"></span></a>
             <ul class="dropdown-menu">
+            <li class="disabled"><a href="#">Mark completed</a></li>
             @foreach(App\Chore::all() as $chore)
             <li><a href="#">{{$chore->name}}</a></li>
             @endforeach
+            <li class="divider"></li>
+            <li><a href="/chores/create">+ New Chore</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -50,6 +54,11 @@
           </ul>
         </li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
+
+  @endif
 </nav>
