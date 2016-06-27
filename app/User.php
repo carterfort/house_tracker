@@ -23,4 +23,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function payments()
+    {
+        return $this->hasMany(BillPayment::class);
+    }
+
+    public function paidBill(Bill $bill)
+    {
+        return $this->payments()->whereHas('bill', function($query) use ($bill){ 
+            $query->where('bills.id', $bill->id);
+        })->count();
+    }
 }
