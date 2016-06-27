@@ -38,10 +38,25 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bills <span class="caret"></span></a>
             <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
+              <li class="disabled"><a href="#">Add a Bill From...</a></li>
+            @foreach(App\Biller::all() as $biller)
+              <li><a href="/billers/{{$biller->id}}/bills/create">{{$biller->name}}</a></li>
+            @endforeach
+            @if(App\Bill::due()->count())
+              <li class="divider"></li>
+              <li class="disabled"><a href="#">Upcoming Bills</a></li>
+            @foreach(App\Bill::due() as $bill)
+              <li><a href="/bills/{{$bill->id}}/payments/create">
+                <small class="text-muted">{{$bill->biller->name}}</small><br/>
+                Due {{$bill->due_date->format('m/d/Y')}}<br/>
+                {{$bill->amount_due}}
+              </a></li>
+            @endforeach
+            @endif
+            <li class="divider"></li>
+            <li><a href="/billers/create">+ New Biller</a></li>
           </ul>
         </li>
-
         <!-- 
         
         Delaying these for MVP
