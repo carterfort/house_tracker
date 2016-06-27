@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => 'auth'], function(){
+
+	Route::get('chores/create', 'ChoresController@create');
+
+});
