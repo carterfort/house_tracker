@@ -17,8 +17,8 @@ class CreateChoresTable extends Migration
 
             $table->string('name');
             $table->text('summary');
-            $table->string('repeats_every');
-            $table->string('best_time_to_do');
+            $table->string('repeats_every')->nullable();
+            $table->string('best_time_to_do')->nullable();
 
             $table->timestamps();
         });

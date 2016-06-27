@@ -17,10 +17,11 @@ class CreateBillPaymentsTable extends Migration
             
             $table->integer('bill_id')->unsigned();
             $table->foreign('bill_id')->references('id')->on('bills');
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
                 
             $table->integer('amount');
-            
-            $table->date('due_date')->nullable();
             $table->date('payment_made_on')->nullable();
 
             $table->timestamps();

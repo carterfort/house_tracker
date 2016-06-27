@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ChoreRecord extends Model
 {
 
+	protected $fillable = ['user_id'];
+
 	public function doneBy()
 	{
 		return $this->belongsTo(User::class);

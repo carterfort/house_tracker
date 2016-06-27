@@ -15,10 +15,15 @@ class CreateListItemsTable extends Migration
         Schema::create('list_items', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->string('title');
+            $table->text('summary');
+
             $table->integer('list_id')->unsigned();
             $table->foreign('list_id')->references('id')->on('lists');
 
             $table->dateTime('completed_at')->nullable();
+            $table->integer('completed_by_id')->unsigned()->nullable();
+            $table->foreign('completed_by_id')->references('id')->on('users');
 
             $table->timestamps();
         });

@@ -15,7 +15,11 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->string('name');
+            $table->string('entity');
+            $table->string('type');
+
+            $table->integer('amount');
+            $table->date('due_date')->nullable();
 
             $table->timestamps();
         });
