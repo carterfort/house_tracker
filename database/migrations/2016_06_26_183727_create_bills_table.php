@@ -20,6 +20,7 @@ class CreateBillsTable extends Migration
 
             $table->integer('amount');
             $table->date('due_date')->nullable();
+            $table->date('paid_in_full_on')->nullable();
 
             $table->timestamps();
         });
