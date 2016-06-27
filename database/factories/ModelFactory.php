@@ -23,8 +23,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Bill::class, function (Faker\Generator $faker) {
     return [
-        'entity' => $faker->name,
-        'type' => $faker->word,
+        'biller_id' => function(){
+            return factory(App\Biller::class)->create()->id;
+        },
         'amount' => $faker->numberBetween(100, 10000)
     ];
 });
@@ -37,6 +38,15 @@ $factory->define(App\BillPayment::class, function (Faker\Generator $faker) {
     	'bill_id' => function(){
     		return factory(App\Bill::class)->create()->id;
     	}
+    ];
+});
+
+$factory->define(App\Biller::class, function(Faker\Generator $faker){
+    return [
+        'name' => $faker->name,
+        'summary' => $faker->words(10),
+        'phone_number' => $faker->phoneNumber,
+        'website_url' => $faker->url
     ];
 });
 
