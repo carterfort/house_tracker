@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -68,5 +69,16 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * We trust each other here. Allow logging in using just the user id
+     * @param  Request $request
+     * @return Redirect             Take us wherever we're going
+     */
+    public function login(Request $request)
+    {
+        auth()->loginUsingId($request->user_id);
+        return redirect($this->redirectTo);
     }
 }
