@@ -22,4 +22,9 @@ class Chore extends Model
     		$record->save();
     	}
     }
+
+    public function scores($dayCount)
+    {
+    	return ChoreRecord::where('created_at', '>', Carbon::now()->subDays($dayCount))->get();
+    }
 }
