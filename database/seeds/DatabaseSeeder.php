@@ -26,9 +26,30 @@ class DatabaseSeeder extends Seeder
 	        $giantEagle->addList($list);
         });
 
-        $duquesne = factory(App\Biller::class)->create(['name' => 'Duquesne Light', 'summary' => 'Electricity']);
-        $bill = factory(App\Bill::class)->create(['biller_id' => $duquesne->id, 'amount' => 10000, 'due_date' => '2016-08-01']);
-        $payment = factory(App\BillPayment::class)->make(['user_id' => $carter->id, 'amount' => 5000, 'payment_made_on' => '2016-07-20', 'bill_id' => $bill->id]);
+        factory(App\Biller::class)->create([
+            'name' => 'Duquesne Light',
+            'summary' => 'Electricity'
+        ]);
+
+        factory(App\Biller::class)->create([
+            'name' => 'PGH2O',
+            'summary' => 'Water'
+        ]);
+
+        factory(App\Biller::class)->create([
+            'name' => 'Dina',
+            'summary' => 'Rent'
+        ]);
+
+        factory(App\Biller::class)->create([
+            'name' => 'Verizon',
+            'summary' => 'Internet'
+        ]);
+
+        factory(App\Biller::class)->create([
+            'name' => 'People\'s Gas',
+            'summary' => 'Gas'
+        ]);
 
         factory(App\Chore::class)->create([
             'name' => 'Load the dishwasher',
