@@ -33,6 +33,8 @@ class User extends Authenticatable
     {
         return $this->payments()->whereHas('bill', function($query) use ($bill){ 
             $query->where('bills.id', $bill->id);
-        })->count();
+        })
+        ->orderBy('payment_made_on', "DESC")
+        ->first();
     }
 }
