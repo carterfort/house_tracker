@@ -26,10 +26,13 @@
 							name="payment_made_on"
 							type="date" 
 							placeholder="Payment made on {{date('Y-m-d')}}"
-							value="{{old('payment_made_on')}}" />
+							value="{{old('payment_made_on', date('Y-m-d'))}}" />
 					</p>
 				</div>
 				<div class="panel-footer text-right">
+				@if(auth()->user()->paidBill($bill))
+				Hey! You know you paid this on {{auth()->user()->paidBill($bill)->payment_made_on->format('m/d/Y')}}, right? 
+				@endif
 					<button class="btn btn-success">Record Payment</button>
 				</div>
 			</div>
