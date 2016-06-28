@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">{{env('HOUSE_NAME')}}</a>
+      <a class="navbar-brand" href="{{url('/')}}">{{env('HOUSE_NAME')}}</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
