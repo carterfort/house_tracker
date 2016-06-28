@@ -22,19 +22,26 @@
                 </div>
                 <h4>Due soon</h4>
                 <div class="list-group">
-                    @foreach(App\Bill::due() as $bill)
-                    <h5>{{$bill->biller->name}}</h5>
 
+                    @foreach(App\Bill::due() as $bill)
+                    <div class="list-group-item">
+                    <h5>
+                        {{$bill->biller->name}}
+                        <a href="/bills/{{$bill->id}}/payments/create">Pay bill
+                    </a>
+                    </h5>
+                    <hr />
                     @foreach(App\User::all() as $user)
                         @if($user->paidBill($bill))
-                        <span class="glyphicon glyphicon-check"></span> {{$user->name}} 
+                        <span class="glyphicon glyphicon-check text-success"></span> 
                         @else
-                        <span class="glyphicon glyphicon-remove"></span> {{$user->name}} 
+                        <span class="glyphicon glyphicon-remove text-danger"></span>
                         @endif
+                        {{$user->name}} 
                         <br/>
                     @endforeach
 
-                    <a href="#">Pay bill</a>
+                    </div>
                     @endforeach
                 </div>
             </div>
