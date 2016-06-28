@@ -11,9 +11,9 @@ class BillPayment extends Model
 
 	use DirtyAmounts;
 
-    protected $dates = ['payment_made_at'];
+    protected $dates = ['payment_made_on'];
 
-    protected $fillable = ['bill_id', 'dirty_amount'];
+    protected $fillable = ['bill_id', 'dirty_amount', 'payment_made_on'];
 
     public function scopeRecentForUser($query, $user)
     {
