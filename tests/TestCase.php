@@ -1,7 +1,15 @@
 <?php
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+
+    use DatabaseTransactions;
+    use WithoutMiddleware;
+
     /**
      * The base URL to use while testing the application.
      *
@@ -22,4 +30,5 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
 }
