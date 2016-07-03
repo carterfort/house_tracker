@@ -2,12 +2,11 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use App\Billing\DirtyAmounts;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class Bill extends Model
-{
+class Bill extends Model {
 
 	use DirtyAmounts;
 
@@ -19,52 +18,55 @@ class Bill extends Model
 		'due_date'
 	];
 
-	public function scopeDueAfter($query, $date)
-	{
+	public function apportion() {
+		$apportioner = (new ApportionsBills($this));
+		$apportioner->go();
+	}
+
+	public function scopeDueAfter($query, $date) {
 		return $query->where('due_date', '>', $date);
 	}
 
-	public function scopeUnpaid($query)
-	{
+	public function scopeUnpaid($query) {
 		return $query->whereNull('paid_in_full_on');
 	}
 
-	public function biller()
-	{
-		return $this->belongsTo(Biller::class);
+	public function biller() {
+		return $this->belongsTo(Biller::class );
 	}
 
-	public function payments()
-	{
-		return $this->hasMany(BillPayment::class);
+	public function payments() {
+		return $this->hasMany(BillPayment::class );
 	}
 
-	public function makePayment($payment)
+	public function obligations()
 	{
+		return $this->hasMany(BillObligation::class);
+	}
+
+
+	public function makePayment($payment) {
 		$this->payments()->save($payment);
 		$this->updatePayments();
 	}
 
-	protected function updatePayments()
-	{
-		if ($this->amount <= $this->payments()->sum('amount')){
+	protected function updatePayments() {
+		if ($this->amount <= $this->payments()->sum('amount')) {
 			$this->attributes['paid_in_full_on'] = Carbon::now();
 		} else {
 			$this->attributes['paid_in_full_on'] = null;
 		}
 	}
 
-	public function getAmountDueAttribute()
-	{
-		return $this->formattedAmount($this->amount - $this->payments()->sum('amount'));
+	public function getAmountDueAttribute() {
+		return $this->formattedAmount($this->amount-$this->payments()->sum('amount'));
 	}
 
-	protected function formattedAmount($amount)
-	{
-		return '$'.number_format($amount / 100, 2, '.', ',');
+	protected function formattedAmount($amount) {
+		return '$'.number_format($amount/100, 2, '.', ',');
 	}
 
-	public static function due(){
-		return static::dueAfter(Carbon::now())->unpaid()->get();
+	public static function due() {
+		return static ::dueAfter(Carbon::now())->unpaid()->get();
 	}
 }
