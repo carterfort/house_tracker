@@ -44,7 +44,7 @@ $factory->define(App\BillPayment::class, function (Faker\Generator $faker) {
 $factory->define(App\Biller::class, function(Faker\Generator $faker){
     return [
         'name' => $faker->name,
-        'summary' => $faker->words(10),
+        'summary' => implode(' ', $faker->words(10)),
         'phone_number' => $faker->phoneNumber,
         'website_url' => $faker->url
     ];
@@ -88,5 +88,17 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'owner_id' => function(){
         	return factory(App\User::class)->create()->id;
         }
+    ];
+});
+
+$factory->define(App\BillApportionment::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => function(){
+            return factory(App\User::class)->create()->id;
+        },
+        'biller_id' => function(){
+            return factory(App\Biller::class)->create()->id;
+        },
+        'percentage' => 50
     ];
 });
