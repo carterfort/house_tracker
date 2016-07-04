@@ -11,4 +11,9 @@ class BillObligation extends Model
     	'amount',
     	'bill_id'
     ];
+
+    public function payments()
+    {
+    	return $this->hasMany(BillPayment::class);
+    }
 }
