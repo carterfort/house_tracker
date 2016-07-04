@@ -2,8 +2,10 @@
 
 namespace App;
 
-use App\Billing\DirtyAmounts;
 use Carbon\Carbon;
+
+use App\Billing\DirtyAmounts;
+use App\Billing\ApportionsBills;
 use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model {
@@ -15,11 +17,12 @@ class Bill extends Model {
 	protected $fillable = [
 		'dirty_amount',
 		'biller_id',
-		'due_date'
+		'due_date',
+		'amount'
 	];
 
 	public function apportion() {
-		$apportioner = (new ApportionsBills($this));
+		$apportioner = (new ApportionsBills($this, User::all()));
 		$apportioner->go();
 	}
 
