@@ -18,7 +18,7 @@ class ApportionsBills {
 	}
 
 	public function go()
-	{		
+	{
 		$this->users->each(function($user){
 			$amount = $this->amountDueForUser($user);
 			BillObligation::create([
@@ -31,28 +31,23 @@ class ApportionsBills {
 
 	protected function amountDueForUser($user)
 	{
-		$apportionment = BillApportionment::bill($this->bill)->first();
+		$apportionment = BillApportionment::bill($this->bill)->user($user)->first();
+
 		if ($apportionment)
 		{
+			//Check that this is a valid apportionment
+			$apportionment->validate();
+			//Return the amount
+			return $apportionment->amountDue($this->bill);
+
 			//TODO - Figure out a way to evenly apportion? Or require explicit apportionment for each biller that has any apportionments...
+	
 		}
 		
-		return $this->amountForApportionment($apportionment);
 
 		return $this->bill->amount / $this->users->count();
 
 	}
 
-	protected function amountForApportionment($apportionment)
-	{
-
-    	if ($apportionment->percentage){
-
-			return $this->bill->amount * $apportionment->multiplier;
-    	}
-
-		return $apportionment->absolute;
-    
-	}
 
 }
