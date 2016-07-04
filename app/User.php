@@ -29,6 +29,16 @@ class User extends Authenticatable
         return $this->hasMany(BillPayment::class);
     }
 
+    public function obligations()
+    {
+        return $this->hasMany(BillObligation::class);
+    }
+
+    public function unpaidObligations()
+    {
+        return $this->obligations()->has('payments', 0);
+    }
+
     public function paidBill(Bill $bill)
     {
         return $this->payments()->whereHas('bill', function($query) use ($bill){ 
