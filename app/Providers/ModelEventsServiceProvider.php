@@ -12,7 +12,9 @@ class ModelEventsServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-		//
+        Bill::created(function ($bill) {
+            $bill->apportion();
+        });
 	}
 
 	/**
@@ -21,8 +23,6 @@ class ModelEventsServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function register() {
-		Bill::created(function ($bill) {
-				$bill->apportion();
-			});
+		
 	}
 }
