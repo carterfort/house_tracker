@@ -13,7 +13,7 @@ class BillPayment extends Model
 
     protected $dates = ['payment_made_on'];
 
-    protected $fillable = ['bill_id', 'dirty_amount', 'payment_made_on'];
+    protected $fillable = ['obligation_id', 'dirty_amount', 'payment_made_on'];
 
     public function scopeRecentForUser($query, $user)
     {
@@ -22,9 +22,9 @@ class BillPayment extends Model
     	})->where('created_at', '>', Carbon::now()->subWeeks(2));
     }
 
-    public function bill()
+    public function obligation()
     {
-    	return $this->belongsTo(Bill::class);
+    	return $this->belongsTo(BillObligation::class);
     }
 
     public function madeBy()
