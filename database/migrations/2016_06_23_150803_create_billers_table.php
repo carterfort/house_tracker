@@ -18,6 +18,10 @@ class CreateBillersTable extends Migration
             $table->string('name');
             $table->string('summary');
 
+            $table->boolean('auto_creates');
+            $table->integer('auto_create_day')->nullable();
+            $table->integer('auto_create_amount')->nullable();
+
             $table->string('phone_number');
             $table->string('website_url');
 

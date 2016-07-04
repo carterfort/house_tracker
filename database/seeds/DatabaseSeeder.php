@@ -36,9 +36,12 @@ class DatabaseSeeder extends Seeder
             'summary' => 'Water'
         ]);
 
-        factory(App\Biller::class)->create([
+        $rentBiller = factory(App\Biller::class)->create([
             'name' => 'Dina',
-            'summary' => 'Rent'
+            'summary' => 'Rent',
+            'auto_creates' => true,
+            'auto_create_day' => 15,
+            'auto_create_amount' => 300000
         ]);
 
         factory(App\Biller::class)->create([
@@ -78,6 +81,18 @@ class DatabaseSeeder extends Seeder
             'repeats_every' => "Thursday",
             'best_time_to_do' => '17:00'
         ]);
+
+        factory(App\BillApportionment::create([
+            'biller_id' => $rentBiller->id,
+            'user_id' => $christina->id,
+            'percentage' => 40
+        ]));
+
+        factory(App\BillApportionment::create([
+            'biller_id' => $rentBiller->id,
+            'user_id' => $carter->id,
+            'percentage' => 60
+        ]));
 
     }
 }

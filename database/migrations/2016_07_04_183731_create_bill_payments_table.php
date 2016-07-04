@@ -15,8 +15,8 @@ class CreateBillPaymentsTable extends Migration
         Schema::create('bill_payments', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->integer('bill_id')->unsigned();
-            $table->foreign('bill_id')->references('id')->on('bills');
+            $table->integer('obligation_id')->unsigned();
+            $table->foreign('obligation_id')->references('id')->on('bill_obligations');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
