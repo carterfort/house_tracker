@@ -1,9 +1,11 @@
 <?php
 
+
 use App\Billing\ApportionsBills;
 
 class ApportionmentTest extends TestCase
 {
+
     /** @test **/
     public function it_evenly_divides_between_users()
     {
@@ -13,8 +15,20 @@ class ApportionmentTest extends TestCase
         $apportioner = new ApportionsBills($bill, $users);
         $apportioner->go();
 
-        //This bill should be equally apportioned among the users
-        $this->assertEquals(3, $bill->obligations->count());
+        $obligations = collect([]);
+
+        foreach($users as $user)
+        {
+            $obligations = $obligations->merge($user->obligations);
+        }
+
+        //There should be three obligations between these three users
+        $this->assertEquals(3, $obligations->count());
+
+        //Each obligation should be 333
+        $obligations->each(function($obligation){
+            $this->assertEquals(333, $obligation->amount);
+        });
     }
 
     /** @test */
@@ -38,6 +52,26 @@ class ApportionmentTest extends TestCase
         $apportioner = new ApportionsBills($bill, $users);
         $apportioner->go();
 
-        dd($bill->obligations->toArray());
+        //180000 is 60% of 300000
+
+        $this->assertEquals(180000, $users[1]->obligations->first()->amount);
+    }
+
+    /** @test
+    * @expectedException App\Exceptions\InvalidApportionment
+     */
+    function it_throws_an_exception()
+    {
+        $bill = factory(App\Bill::class)->create(['amount' => 300000]);
+        $users = factory(App\User::class, 2)->create();
+        
+        factory(App\BillApportionment::class)->create([
+            'user_id' => $users->first()->id,
+            'biller_id' => $bill->biller->id,
+            'percentage' => 40
+        ]);
+
+        $apportioner = new ApportionsBills($bill, $users);
+        $apportioner->go();
     }
 }
