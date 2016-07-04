@@ -20,13 +20,19 @@ class ApportionmentTest extends TestCase
     /** @test */
     function it_honors_override_apportionments()
     {
-    	$bill = factory(App\Bill::class)->create(['amount' => 1000]);
+    	$bill = factory(App\Bill::class)->create(['amount' => 300000]);
 		$users = factory(App\User::class, 2)->create();
 		
 		factory(App\BillApportionment::class)->create([
 			'user_id' => $users->first()->id,
 			'biller_id' => $bill->biller->id,
-			'percentage' => 35
+			'percentage' => 40
+		]);
+
+		factory(App\BillApportionment::class)->create([
+			'user_id' => $users[1]->id,
+			'biller_id' => $bill->biller->id,
+			'percentage' => 60
 		]);
 
         $apportioner = new ApportionsBills($bill, $users);
