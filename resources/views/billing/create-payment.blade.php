@@ -2,13 +2,13 @@
 
 @section('main')
 
-<form method="POST" action="/api/bills/{{$bill->id}}/add-payment">
+<form method="POST" action="/api/obligations/{{$obligation->id}}/add-payment">
 	{{csrf_field()}}
 	<div class="row">
 		<div class="col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Add a payment for {{$bill->biller->name}} due on {{$bill->due_date->format('m/d/Y')}}</h3>
+					<h3 class="panel-title">Add a payment for {{$obligation->bill->biller->name}} due on {{$obligation->bill->due_date->format('m/d/Y')}}</h3>
 				</div>
 				<div class="panel-body">
 
@@ -16,8 +16,8 @@
 						<input 
 							class="form-control"
 							name="dirty_amount"
-							placeholder="Amount ($134.53)" 
-							value="{{old('dirty_amount')}}" />
+							placeholder="Amount ($134.53)"
+							value="{{old('dirty_amount', $obligation->formatted_amount)}}" />
 					</p>
 
 					<p>
@@ -30,9 +30,6 @@
 					</p>
 				</div>
 				<div class="panel-footer text-right">
-				@if(auth()->user()->paidBill($bill))
-				Hey! You know you paid this on {{auth()->user()->paidBill($bill)->payment_made_on->format('m/d/Y')}}, right? 
-				@endif
 					<button class="btn btn-success">Record Payment</button>
 				</div>
 			</div>
