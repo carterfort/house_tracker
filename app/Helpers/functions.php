@@ -18,3 +18,8 @@ function startEndOfMonth($month){
 
 	return [$start, $end];
 }
+
+function displayCash($cents)
+{
+	return "$".number_format($cents / 100, 2, '.',',');
+}
