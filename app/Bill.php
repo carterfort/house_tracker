@@ -18,7 +18,8 @@ class Bill extends Model {
 		'dirty_amount',
 		'biller_id',
 		'due_date',
-		'amount'
+		'amount',
+		'paid_in_full_on'
 	];
 
 	public function apportion() {
@@ -39,7 +40,7 @@ class Bill extends Model {
 	}
 
 	public function payments() {
-		return $this->hasMany(BillPayment::class );
+		return $this->hasManyThrough(BillPayment::class, BillObligation::class, 'bill_id', 'obligation_id');
 	}
 
 	public function obligations()
@@ -47,22 +48,8 @@ class Bill extends Model {
 		return $this->hasMany(BillObligation::class);
 	}
 
-
-	public function makePayment($payment) {
-		$this->payments()->save($payment);
-		$this->updatePayments();
-	}
-
-	protected function updatePayments() {
-		if ($this->amount <= $this->payments()->sum('amount')) {
-			$this->attributes['paid_in_full_on'] = Carbon::now();
-		} else {
-			$this->attributes['paid_in_full_on'] = null;
-		}
-	}
-
 	public function getAmountDueAttribute() {
-		return $this->formattedAmount($this->amount-$this->payments()->sum('amount'));
+		return $this->formattedAmount($this->amount - $this->payments()->sum('bill_payments.amount'));
 	}
 
 	protected function formattedAmount($amount) {
