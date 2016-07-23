@@ -29,4 +29,4 @@ Route::post('bills', 'BillingController@storeBill');
 /**
  * Store Bill Payments
  */
-Route::post('bills/{bill}/add-payment', 'BillingController@storePayment');
+Route::post('obligations/{obligation}/add-payment', 'BillingController@storePayment');
