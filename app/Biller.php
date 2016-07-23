@@ -14,6 +14,11 @@ class Biller extends Model
     	'website_url'
     ];
 
+    public function scopeNoBillsThisMonth($query)
+    {
+        return $query->has('billsForMonth', 0);
+    }
+
     public function scopeAutoCreatesOnDay($query, $day)
     {
     	return $query->where('auto_creates', true)
