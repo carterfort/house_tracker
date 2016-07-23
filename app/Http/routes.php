@@ -19,6 +19,6 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('chores/create', 'ChoresController@create');
 	Route::get('billers/create', 'BillingController@createBiller');
 	Route::get('billers/{biller}/bills/create', 'BillingController@createBillForBiller');
-	Route::get('bills/{bill}/payments/create', 'BillingController@createPaymentForBill');
+	Route::get('obligations/{obligation}/payments/create', 'BillingController@createPaymentForObligation');
 
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bill;
 use App\Biller;
 use App\Http\Requests;
+use App\BillObligation;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -19,9 +20,9 @@ class BillingController extends Controller
     	return view('billing/create-bill', compact('biller'));
     }
 
-    public function createPaymentForBill(Bill $bill)
+    public function createPaymentForObligation(BillObligation $obligation)
     {
-    	return view('billing/create-payment', compact('bill'));
+    	return view('billing/create-payment', compact('obligation'));
     }
 
 }

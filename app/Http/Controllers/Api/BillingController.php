@@ -6,6 +6,7 @@ use App\Bill;
 use App\Biller;
 use App\BillPayment;
 use App\Http\Requests;
+use App\BillObligation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -30,19 +31,22 @@ class BillingController extends Controller
     	]);
     	
     	$bill = Bill::create($request->all());
-    	return redirect("/bills/{$bill->id}/payments/create");
+    	return redirect("/");
     }
 
-    public function storePayment(Request $request, Bill $bill)
+    public function storePayment(Request $request, BillObligation $obligation)
     {
     	$this->validate($request, [
     		'dirty_amount' => 'required',
     	]);
 
-    	$payment = new BillPayment($request->all());
+    	$payment = new BillPayment([
+            'dirty_amount' => $request->dirty_amount,
+            'payment_made_on' => $request->payment_made_on
+        ]);
     	$payment->user_id = auth()->user()->id;
 
-    	$bill->makePayment($payment);
+    	$obligation->makePayment($payment);
 
     	return home();
     }
