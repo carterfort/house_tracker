@@ -38,8 +38,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $this->mapWebRoutes($router);
-
         $this->mapApiRoutes($router);
+        $this->mapWebhookRoutes($router);
     }
 
     /**
@@ -59,6 +59,15 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
+    protected function mapWebhookRoutes(Router $router)
+    {
+        $router->group([
+            'namespace' => 'App\Http\Controllers\Webhooks',
+            'prefix' => 'webhooks'
+            ] , function($router){
+                require app_path('Http/webhooks.php');
+            });
+    }
     protected function mapApiRoutes(Router $router)
     {
         $router->group([
