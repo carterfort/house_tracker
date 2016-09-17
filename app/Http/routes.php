@@ -12,7 +12,8 @@
 */
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
-Route::auth();
+Auth::routes();
+Route::get('logout', 'Auth\LoginController@logout');
 
 Route::group(['middleware' => 'auth'], function(){
 
