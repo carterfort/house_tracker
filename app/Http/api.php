@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 
 /**
  * Record a chore for a user
@@ -30,3 +31,7 @@ Route::post('bills', 'BillingController@storeBill');
  * Store Bill Payments
  */
 Route::post('obligations/{obligation}/add-payment', 'BillingController@storePayment');
+
+Route::post('bills/slack-webhook', function(Request $request){
+	return response()->json(['text' => 'Say the words!']);
+});
